@@ -1,4 +1,13 @@
-Q-Chem input and output files. 
-TheoDORE input file.
+names in ctnumbers that include '/' are causing problems.
 
-How to generate CT numbers for one fragment consisting of Ca and O and the rest of the molecule forming the other fragment?
+To reproduce run
+```
+theodore analyze_tden
+theodore plot_omfrag
+```
+The second command should printout a python error ending with 
+```
+...
+fp = builtins.open(filename, "w+b")
+FileNotFoundError: [Errno 2] No such file or directory: 'pcolor_uhfref/1/1.png'
+```
