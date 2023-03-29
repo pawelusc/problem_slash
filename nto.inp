@@ -1,0 +1,68 @@
+$comment
+Trans isomer (planar structure)
+
+EOM-EA-CCSD/cc-pVDZ opt for the 1A' state starting from a charge +1 singlet
+
+doublet reference for an EOM-EE job
+$end
+
+$molecule
+0 2
+  C       5.3832949554     1.1268023932    -0.0000000000
+  C       3.9857848754     1.0242652883    -0.0000000000
+  C       6.1864366870    -0.0311896649     0.0000000000
+  C       5.5825967915    -1.2986615016     0.0000000000
+  C       4.1810701040    -1.4061755307     0.0000000000
+  C       3.3823631861    -0.2507216815    -0.0000000000
+  N       1.9614847270    -0.4835236846    -0.0000000000
+  N       1.2812134824     0.5744215944    -0.0000000000
+  C      -0.1339985068     0.3649235430    -0.0000000000
+  C      -0.9257923961     1.5257693382    -0.0000000000
+  C      -2.3247269471     1.4417831343     0.0000000001
+  C      -2.9688065782     0.1818510535     0.0000000000
+  C      -2.1571876382    -0.9857954463    -0.0000000000
+  C      -0.7640421169    -0.8992048201    -0.0000000001
+  H       5.8537616426     2.1167460216    -0.0000000000
+  H       3.3494475397     1.9129885234    -0.0000000001
+  H       7.2785746364     0.0584934720     0.0000000000
+  H       6.2000128737    -2.2038310242     0.0000000001
+  H       3.6827083791    -2.3812968442     0.0000000001
+  H      -0.4209780821     2.4983115557     0.0000000000
+  H      -2.9389457145     2.3492456808     0.0000000001
+  H      -2.6524563713    -1.9638216298    -0.0000000000
+  H      -0.1447973927    -1.8007567674    -0.0000000001
+  O      -4.3059650637     0.0857744134     0.0000000000
+  Ca     -6.4134084937    -0.0683092669     0.0000000000
+$end
+
+$rem
+! method
+  method = eom-ccsd
+  ee_states = [9, 6]
+
+! basis
+  basis = aug-cc-pVDZ
+
+! memory
+  !mem_total = 12800              ! Batch (qchempbs_mp4)
+  !cc_memory = 10240
+  !mem_total = 102400             ! Big (qchempbs_mp12)
+  !cc_memory = 81920 
+  mem_total = 307200              ! Giant (qchempbs_mp16)
+  cc_memory = 245760 
+  !mem_total = 201840             ! Huge (qchempbs_mp20)
+  !cc_memory = 161472 
+
+! Properties
+  cc_eom_prop = true              ! \mu, \expval{x^2} and alike
+  cc_eom_prop_te = true           ! <S^2>
+
+! NTOs
+  state_analysis = true           ! needs to be activated for NTOs to start
+  cc_trans_prop = 1               ! 1: ccsd ref/cc_state_to_opt -> eom; 2: eom <--> eom
+  !cc_state_to_opt = [1, 1]       ! if only transition from one state [irrep #, state in the irrep]
+  nto_pairs = 2                   ! # of pairs per excited state (in .out)
+  !gui = 2                        ! The NTOs are generated for iqmol but they seem to be a mess
+  molden_format = true            ! Use with the 'save' option while running Q-Chem
+  wfa_orb_thresh = 1              ! N = 3; Export all NTO/NO/NDO pairs with a weight above 10^-N
+$end
